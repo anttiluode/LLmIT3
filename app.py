@@ -226,28 +226,36 @@ def build_comment_tree(comment, comments_by_id, level=0):
 @app.route('/api/posts', methods=['POST'])
 @login_required
 def api_submit_post():
-    data = request.get_json()
-    group_name = data.get('group')
-    title = data.get('title')
-    content = data.get('content')
-    image_url = data.get('image_url')
+    try:
+        data = request.get_json()
+        group_name = data.get('group')
+        title = data.get('title')
+        content = data.get('content')
+        image_url = data.get('image_url', None)
 
-    subllmit = Subllmit.query.filter_by(name=group_name).first()
-    if not subllmit:
-        return jsonify({"message": "Subllmit does not exist."}), 400
+        # Ensure the Subllmit exists
+        subllmit = Subllmit.query.filter_by(name=group_name).first()
+        if not subllmit:
+            return jsonify({"message": "Subllmit does not exist."}), 400
 
-    post = Post(
-        group_name=group_name,
-        title=title,
-        content=content,
-        image_url=image_url,
-        is_ai_generated=False,
-        user_id=current_user.id
-    )
-    db.session.add(post)
-    db.session.commit()
+        # Create the Post object
+        post = Post(
+            group_name=group_name,
+            title=title,
+            content=content,
+            image_url=image_url if image_url else None,
+            is_ai_generated=False,
+            user_id=current_user.id
+        )
+        db.session.add(post)
+        db.session.commit()
 
-    return jsonify({"message": "Post submitted successfully."}), 201
+        return jsonify({"message": "Post submitted successfully."}), 201
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"message": "Error creating post", "error": str(e)}), 500
+
 
 # API Endpoint: Submit a comment
 @app.route('/api/comments', methods=['POST'])
