@@ -126,8 +126,13 @@ document.addEventListener('DOMContentLoaded', () => {
                             ${post.image_url ? `<img src="${post.image_url}" alt="Post Image" class="post-image">` : ''}
                             <p>${post.content}</p>
                         </div>
-                        <button class="reply-post-btn" data-post-id="${post.id}">Reply</button>
+                        <button class="load-comments-btn" data-post-id="${post.id}">Load Comments</button>
+                        <button class="reply-post-btn" data-post-id="${post.id}">Reply to Post</button>
                         <div class="comments" id="comments-${post.id}"></div>
+                        <div class="reply-form-container" id="reply-form-${post.id}" style="display: none;">
+                            <textarea class="reply-content" placeholder="Write your reply..."></textarea>
+                            <button class="submit-reply-btn" data-post-id="${post.id}">Submit Reply</button>
+                        </div>
                     `;
                     postList.appendChild(postElement);
                 });
@@ -142,21 +147,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (event.target.classList.contains('load-comments-btn')) {
             const postId = event.target.getAttribute('data-post-id');
             loadComments(postId);
-        } else if (event.target.classList.contains('reply-post-btn')) {
-            const postId = event.target.getAttribute('data-post-id');
-            const commentsContainer = document.getElementById(`comments-${postId}`);
-            const replyFormContainer = document.createElement('div');
-            replyFormContainer.className = 'reply-form-container';
-            replyFormContainer.innerHTML = `
-                <textarea class="reply-content" placeholder="Write your reply..."></textarea>
-                <button class="submit-reply-btn" data-post-id="${postId}">Submit Reply</button>
-            `;
-            commentsContainer.appendChild(replyFormContainer);
+        }
 
-            replyFormContainer.querySelector('.submit-reply-btn').addEventListener('click', () => {
-                const content = replyFormContainer.querySelector('.reply-content').value;
-                submitComment(postId, content);
-            });
+        if (event.target.classList.contains('reply-post-btn')) {
+            const postId = event.target.getAttribute('data-post-id');
+            const replyForm = document.getElementById(`reply-form-${postId}`);
+            replyForm.style.display = replyForm.style.display === 'none' ? 'block' : 'none';
+        }
+
+        if (event.target.classList.contains('submit-reply-btn')) {
+            const postId = event.target.getAttribute('data-post-id');
+            const content = document.querySelector(`#reply-form-${postId} .reply-content`).value;
+            submitComment(postId, content);
         }
     });
 
