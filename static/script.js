@@ -11,7 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const postFormContainer = document.getElementById('post-form-container');
     const postForm = document.getElementById('post-form');
 
-    let currentGroup = null;
+    const nextPageButton = document.getElementById('next-page');
+    const previousPageButton = document.getElementById('previous-page');
+
+    let currentGroup = 'frontpage';
+    let currentPage = 1;
 
     function isMainPage() {
         return currentGroup === null || currentGroup === 'frontpage';
@@ -88,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 group: currentGroup,
                 title: data.title,
                 content: data.content,
-                image_url: data.image_url
+                image_url: data.image
             })
         })
         .then(response => response.json())
@@ -101,10 +105,12 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(error => console.error('Error submitting post:', error));
     });
 
-    function loadGroupPosts(group, sort = 'top') {
+    function loadGroupPosts(group, sort = 'top', page = 1) {
         currentGroup = group;
+        currentPage = page;
         updateActionButtons();
-        let url = `/api/posts?group=${group}&sort=${sort}`;
+
+        let url = `/api/posts?group=${group}&sort=${sort}&page=${page}&limit=10`;
         fetch(url)
             .then(response => response.json())
             .then(posts => {
@@ -147,17 +153,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (event.target.classList.contains('load-comments-btn')) {
             const postId = event.target.getAttribute('data-post-id');
             loadComments(postId);
-        }
-
-        if (event.target.classList.contains('reply-post-btn')) {
+        } else if (event.target.classList.contains('reply-post-btn')) {
             const postId = event.target.getAttribute('data-post-id');
             const replyForm = document.getElementById(`reply-form-${postId}`);
             replyForm.style.display = replyForm.style.display === 'none' ? 'block' : 'none';
-        }
-
-        if (event.target.classList.contains('submit-reply-btn')) {
+        } else if (event.target.classList.contains('submit-reply-btn')) {
             const postId = event.target.getAttribute('data-post-id');
-            const content = document.querySelector(`#reply-form-${postId} .reply-content`).value;
+            const content = event.target.previousElementSibling.value;
             submitComment(postId, content);
         }
     });
@@ -233,6 +235,22 @@ document.addEventListener('DOMContentLoaded', () => {
             loadComments(postId);
         })
         .catch(error => console.error('Error submitting comment:', error));
+    }
+
+    // Load next page
+    if (nextPageButton) {
+        nextPageButton.addEventListener('click', () => {
+            loadGroupPosts(currentGroup, 'top', currentPage + 1);
+        });
+    }
+
+    // Load previous page (if not on the first page)
+    if (previousPageButton) {
+        previousPageButton.addEventListener('click', () => {
+            if (currentPage > 1) {
+                loadGroupPosts(currentGroup, 'top', currentPage - 1);
+            }
+        });
     }
 
     loadSubllmits();
