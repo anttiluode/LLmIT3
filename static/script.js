@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentGroup = 'frontpage';
     let currentPage = 1;
+    let currentSort = 'top';
+    const postsPerPage = 10;
 
     function isMainPage() {
         return currentGroup === null || currentGroup === 'frontpage';
@@ -61,21 +63,27 @@ document.addEventListener('DOMContentLoaded', () => {
         if (event.target.tagName === 'A') {
             event.preventDefault();
             const group = event.target.getAttribute('data-group');
-            loadGroupPosts(group);
+            currentPage = 1; // Reset to page 1 when switching groups
+            loadGroupPosts(group, currentSort);
         }
     });
 
     sortTopButton.addEventListener('click', () => {
-        loadGroupPosts(currentGroup || 'frontpage', 'top');
+        currentSort = 'top';
+        currentPage = 1;
+        loadGroupPosts(currentGroup || 'frontpage', currentSort);
     });
 
     sortNewButton.addEventListener('click', () => {
-        loadGroupPosts(currentGroup || 'frontpage', 'new');
+        currentSort = 'new';
+        currentPage = 1;
+        loadGroupPosts(currentGroup || 'frontpage', currentSort);
     });
 
     backButton.addEventListener('click', () => {
         backButton.style.display = 'none';
-        loadGroupPosts('frontpage');
+        currentPage = 1;
+        loadGroupPosts('frontpage', currentSort);
     });
 
     postForm.addEventListener('submit', (event) => {
@@ -100,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert(result.message);
             postForm.reset();
             postFormContainer.style.display = 'none';
-            loadGroupPosts(currentGroup || 'frontpage');
+            loadGroupPosts(currentGroup || 'frontpage', currentSort);
         })
         .catch(error => console.error('Error submitting post:', error));
     });
@@ -110,13 +118,18 @@ document.addEventListener('DOMContentLoaded', () => {
         currentPage = page;
         updateActionButtons();
 
-        let url = `/api/posts?group=${group}&sort=${sort}&page=${page}&limit=10`;
+        let url = `/api/posts?group=${group}&sort=${sort}&page=${page}&limit=${postsPerPage}`;
+        if (sort === 'new') {
+            url += '&order=desc'; // Ensure that the posts are ordered by creation time descending
+        }
+
         fetch(url)
             .then(response => response.json())
             .then(posts => {
                 postList.innerHTML = '';
                 if (posts.length === 0) {
                     postList.innerHTML = '<p>No posts available for this group.</p>';
+                    updatePaginationButtons(0);
                     return;
                 }
                 posts.forEach(post => {
@@ -142,11 +155,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     `;
                     postList.appendChild(postElement);
                 });
+
+                // Update pagination buttons visibility
+                updatePaginationButtons(posts.length);
             })
             .catch(error => {
                 console.error('Error loading posts:', error);
                 postList.innerHTML = '<p>Error loading posts. Please try again later.</p>';
             });
+    }
+
+    function updatePaginationButtons(postCount) {
+        nextPageButton.style.display = postCount === postsPerPage ? 'block' : 'none';
+        previousPageButton.style.display = currentPage > 1 ? 'block' : 'none';
     }
 
     postList.addEventListener('click', (event) => {
@@ -240,7 +261,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Load next page
     if (nextPageButton) {
         nextPageButton.addEventListener('click', () => {
-            loadGroupPosts(currentGroup, 'top', currentPage + 1);
+            currentPage++;
+            loadGroupPosts(currentGroup, currentSort, currentPage);
         });
     }
 
@@ -248,11 +270,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (previousPageButton) {
         previousPageButton.addEventListener('click', () => {
             if (currentPage > 1) {
-                loadGroupPosts(currentGroup, 'top', currentPage - 1);
+                currentPage--;
+                loadGroupPosts(currentGroup, currentSort, currentPage);
             }
         });
     }
 
     loadSubllmits();
-    loadGroupPosts('frontpage');
+    loadGroupPosts('frontpage', currentSort);
 });
