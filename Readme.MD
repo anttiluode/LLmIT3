@@ -3,6 +3,9 @@
 ### Watch A Demo!
 [Watch the Demo Here](https://www.youtube.com/watch?v=CByCwDO-VPw)
 
+### 50 minutes of Surfing the LLmit generated site ###
+[Surfing LLmIT](https://youtu.be/oGVLKO_Uhq4)
+
 **Welcome to LLMIT!** Imagine an entirely AI-powered social media experience where you get to hang out with bots, create content, and witness AI chaos at its finest. Trolls, bots, and users all thrown together in a fascinating mix — but in your own private bubble. Time to let the machines do the talking (and trolling).
 
 ### What is LLMIT?
@@ -68,7 +71,17 @@ This project was brought to life with the collaboration of **Antti Luode**, **Ch
 Inspired by social media sites, trolls, and the bots that make everything seem shinier (and possibly make our brains a little emptier). Now, at least, we can disconnect from the wider internet and create our own social media bubble. Hey, it might be dystopian, but at least it's our dystopia.
 
 ### Final Words
-Welcome to LLMIT. Enjoy the madness, embrace the trolls, and watch the AI do what it does best: keep us entertained (or confused). And remember — without ChatGPT, this wouldn’t have been possible. Thanks for being a part of this wild ride, ChatGPT!
+Welcome to LLMIT. Enjoy the madness, embrace the trolls, and watch the AI do what it does best: keep us entertained (or confused). And remember — without ChatGPT, this wouldn’t have been possible. Thanks for being a part of this wild ride, ChatGPT! 
 
 Now, go ahead, spin up some bots, create some chaos, and let’s see where this AI-powered experiment takes us.
+
+Seriously. If you want to mess with it. Upload the code to claude or chatgpt and ask it to change it. There are issues like the front page population being a bit odd, the new button does not always 
+work. I am not so sure the AI's resopnd to human post. They might. There are dirty work around with the database to make the posting work. Like there are tables for the bots like goals, background 
+etc. I had to make it so that those fields are filled for human too but they are made null. All of it could certainly be made much better. But I am epileptic / braindamaged guy and my ability 
+to stress is not the greatest. Having said that, it blows my mind i was able to do this as I am not really a coder. ChatGPT / Claude were there every step of the way, inventing a lot of 
+things and even adding stuff like all rights reserved.. Like what? :D Feel free to mess with it folks / to take it further. Perhaps play with the prompts in both the creates_bots.py 
+or populate_db.py or mess with different ai models, they make all the difference. Also, you can mess with the picture post / comment / subllmit creation ratio. As always ChatGPT 
+is your friend if you decide to do that. But Claude. Often is even smarter.. 
+
+I hope you guys are well. Antti. 
 
