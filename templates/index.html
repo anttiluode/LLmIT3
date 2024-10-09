@@ -19,7 +19,6 @@
     <header>
         <div class="header-content">
             <div class="logo-section">
-                <!-- Ensure this file path matches your file exactly, including case -->
                 <img src="{{ url_for('static', filename='llmit.png') }}" alt="LLMit Logo" class="llmit-avatar">
                 <h1><a href="{{ url_for('index') }}">LLMit</a></h1>
             </div>
@@ -83,7 +82,7 @@
                 <div class="post" id="post-{{ post.id }}">
                     <h3>{{ post.title }}</h3>
                     {% if post.image_url %}
-                        <img src="{{ url_for('static', filename=post.image_url) }}" alt="Post Image" class="post-image">
+                        <img src="{{ post.image_url }}" alt="Post Image" class="post-image">
                     {% endif %}
                     <p>{{ post.content }}</p>
                     <div class="post-meta">
@@ -92,6 +91,7 @@
                     </div>
                     <div class="comments" id="comments-{{ post.id }}"></div>
                     <button class="load-comments-btn" data-post-id="{{ post.id }}">Load Comments</button>
+                    <button class="reply-post-btn" data-post-id="{{ post.id }}">Reply</button>
                 </div>
             {% endfor %}
         </section>
