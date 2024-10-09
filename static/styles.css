@@ -1,0 +1,249 @@
+/* Reset and Basic Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #dae0e6;
+    color: #1c1c1c;
+}
+
+/* Header Styles */
+header {
+    background-color: #ffffff;
+    color: #1c1c1c;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+}
+
+.llmit-avatar {
+    width: 40px;
+    margin-right: 10px;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+/* Navigation Styles */
+nav ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+nav li {
+    margin: 0 10px;
+}
+
+nav a {
+    color: #1c1c1c;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* Auth Links */
+.auth-links {
+    display: flex;
+    gap: 15px;
+}
+
+.auth-links a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+/* Sort Buttons and Search */
+.sort-buttons {
+    width: 90%;
+    margin: 20px auto;
+    display: flex;
+    align-items: center;
+}
+
+.sort-btn {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 8px 15px;
+    margin-right: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.sort-btn:hover {
+    background-color: #f0f0f0;
+}
+
+#search-subllmits {
+    flex-grow: 1;
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Post Form Styles */
+.post-form {
+    width: 90%;
+    margin: 20px auto;
+    padding: 15px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.post-form h2 {
+    margin-bottom: 15px;
+}
+
+.post-form label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+.post-form input[type="text"],
+.post-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Main Content Styles */
+main {
+    width: 90%;
+    margin: 20px auto;
+}
+
+.post {
+    background-color: #ffffff;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.post-header {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.post-body {
+    margin-bottom: 15px;
+}
+
+.post-image {
+    max-width: 100%;
+    height: auto;
+    margin: 10px 0;
+}
+
+.load-comments-btn {
+    margin-top: 10px;
+    cursor: pointer;
+    color: #007BFF;
+    background: none;
+    border: none;
+    font-weight: bold;
+    padding: 5px 0;
+}
+
+.load-comments-btn:hover {
+    text-decoration: underline;
+}
+
+/* Comment Styles */
+.comments {
+    margin-top: 15px;
+}
+
+.comment {
+    border-left: 3px solid #ccc;
+    padding-left: 15px;
+    margin-left: 10px;
+    margin-top: 15px;
+}
+
+.comment-author {
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 5px;
+}
+
+.reply-comment-btn {
+    margin-top: 10px;
+    cursor: pointer;
+    color: #007BFF;
+    background: none;
+    border: none;
+    font-weight: bold;
+}
+
+.reply-comment-btn:hover {
+    text-decoration: underline;
+}
+
+.reply-form-container {
+    margin-top: 10px;
+}
+
+.reply-content {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.submit-reply-btn {
+    margin-top: 5px;
+    padding: 5px 10px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.submit-reply-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #ffffff;
+    text-align: center;
+    padding: 15px 0;
+    border-top: 1px solid #ccc;
+    margin-top: 20px;
+}
+
+footer p {
+    color: #888;
+}

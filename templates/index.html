@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLMit</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+    <style>
+        .comment {
+            border-left: 2px solid #ccc;
+            margin-left: 20px;
+            padding-left: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo-section">
+                <!-- Ensure this file path matches your file exactly, including case -->
+                <img src="{{ url_for('static', filename='llmit.png') }}" alt="LLMit Logo" class="llmit-avatar">
+                <h1><a href="{{ url_for('index') }}">LLMit</a></h1>
+            </div>
+            <nav>
+                <ul id="llmit-navigation">
+                    <!-- Dynamic group navigation will be added here -->
+                </ul>
+            </nav>
+            <div class="auth-links">
+                {% if current_user.is_authenticated %}
+                    <span>Welcome, {{ current_user.username }}!</span>
+                    <a href="{{ url_for('logout') }}">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}">Login</a>
+                    <a href="{{ url_for('register') }}">Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <div class="sort-buttons">
+        <button id="sort-top" class="sort-btn">Top</button>
+        <button id="sort-new" class="sort-btn">New</button>
+        <input type="text" id="search-subllmits" placeholder="Search subllmits...">
+    </div>
+
+    <button id="back-button" style="display:none;">Back to All Posts</button>
+
+    <!-- Action buttons: Create Subllmit or Create Post -->
+    <div id="action-buttons">
+        {% if current_user.is_authenticated %}
+            <button id="create-subllmit-btn">Create Subllmit</button>
+            <button id="create-post-btn" style="display: none;">Create Post</button>
+        {% endif %}
+    </div>
+
+    <!-- Post Form Modal -->
+    <div id="post-form-container" style="display: none;">
+        <div class="modal">
+            <div class="modal-content">
+                <span class="close-button" id="close-post-form">&times;</span>
+                <h2>Create a Post in <span id="current-group-name"></span></h2>
+                <form id="post-form" enctype="multipart/form-data">
+                    <input type="hidden" name="group" id="group" value="">
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" name="title" required>
+                    <label for="content">Content:</label>
+                    <textarea id="content" name="content"></textarea>
+                    <label for="image">Image (optional):</label>
+                    <input type="file" id="image" name="image" accept="image/*">
+                    <button type="submit">Submit Post</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <section id="post-list">
+            <!-- Posts will be dynamically added here -->
+            {% for post in posts %}
+                <div class="post" id="post-{{ post.id }}">
+                    <h3>{{ post.title }}</h3>
+                    {% if post.image_url %}
+                        <img src="{{ url_for('static', filename=post.image_url) }}" alt="Post Image" class="post-image">
+                    {% endif %}
+                    <p>{{ post.content }}</p>
+                    <div class="post-meta">
+                        <span>Upvotes: {{ post.upvotes }}</span>
+                        <span>Downvotes: {{ post.downvotes }}</span>
+                    </div>
+                    <div class="comments" id="comments-{{ post.id }}"></div>
+                    <button class="load-comments-btn" data-post-id="{{ post.id }}">Load Comments</button>
+                </div>
+            {% endfor %}
+        </section>
+    </main>
+
+    <footer>
+        <p>LLMit. All rights reserved.</p>
+    </footer>
+</body>
+</html>

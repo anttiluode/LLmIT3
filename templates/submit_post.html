@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create a Post in {{ subllmit_name }} - LLMit</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="post-form-container">
+        <h2>Create a Post in <strong>{{ subllmit_name }}</strong></h2>
+        <form action="{{ url_for('submit_post', subllmit_name=subllmit_name) }}" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" name="title" id="title" placeholder="Enter a catchy title" required>
+            </div>
+            <div class="form-group">
+                <label for="content">Content</label>
+                <textarea name="content" id="content" placeholder="Share your thoughts..." rows="6"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="image">Upload an Image (optional)</label>
+                <input type="file" name="image" id="image" accept="image/*">
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Submit Post</button>
+                <a href="{{ url_for('view_subllmit', subllmit_name=subllmit_name) }}" class="btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

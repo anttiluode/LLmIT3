@@ -1,0 +1,23 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Subllmit - LLMit</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1><a href="{{ url_for('index') }}">LLMit</a></h1>
+    </header>
+
+    <div class="container">
+        <h2>Create a New Subllmit</h2>
+        <form action="{{ url_for('create_subllmit') }}" method="post">
+            <label for="subllmit_name">Subllmit Name:</label><br>
+            <input type="text" name="subllmit_name" id="subllmit_name" required><br><br>
+            <button type="submit">Create Subllmit</button>
+        </form>
+    </div>
+</body>
+</html>
