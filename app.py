@@ -158,9 +158,14 @@ def logout():
 
 # API Endpoint: Load posts for specific group or frontpage
 @app.route('/api/posts', methods=['GET'])
+@app.route('/api/posts', methods=['GET'])
 def api_get_posts():
     group = request.args.get('group', 'frontpage')
     sort = request.args.get('sort', 'top')
+    page = int(request.args.get('page', 1))
+    limit = int(request.args.get('limit', 10))
+
+    offset = (page - 1) * limit
 
     if group == 'frontpage':
         subllmits = Subllmit.query.limit(10).all()
@@ -174,7 +179,8 @@ def api_get_posts():
     else:
         posts = posts.order_by((Post.upvotes - Post.downvotes).desc())
 
-    posts = posts.limit(30).all()
+    # Apply pagination using offset and limit
+    posts = posts.offset(offset).limit(limit).all()
 
     return jsonify([{
         "id": post.id,
@@ -188,6 +194,7 @@ def api_get_posts():
         "timestamp": post.timestamp.isoformat(),
         "author": post.author.username if post.author else "Anonymous"
     } for post in posts])
+
 
 # API Endpoint: Load comments for specific post
 @app.route('/api/posts/<int:post_id>/comments', methods=['GET'])
