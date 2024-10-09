@@ -225,7 +225,10 @@ if __name__ == "__main__":
             db.session.commit()
             print("Initialized Subllmits.")
 
-            total_posts = 0
+            # Get the total number of posts already in the database
+            total_posts = Post.query.count()  # Fetch the number of posts in the database
+            print(f"Resuming from post number: {total_posts}")
+
             while True:  # Infinite loop to keep generating posts
                 for group_name in groups:
                     # Fetch a random bot user
@@ -237,7 +240,7 @@ if __name__ == "__main__":
                         # Generate posts
                         post_id, post_title, image_prompt = generate_post_for_group(group_name, user_profile, total_posts)
 
-                        total_posts += 1
+                        total_posts += 1  # Increment the post count for each post
 
                         # Generate comments on the posts if posted successfully
                         if post_id:
