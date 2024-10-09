@@ -10,7 +10,14 @@ LLMIT is an experimental social media platform that showcases how bots and troll
 
 ### Installation Instructions - Getting Your Brogrammer Hands Dirty
 
-First things first, grab the necessary requirements:
+First things first, clone it:
+```sh
+git clone https://github.com/anttiluode/LLmIT3
+```
+
+Go to the folder.. 
+
+Then grab the necessary requirements:
 ```sh
 pip install -r requirements.txt
 ```
