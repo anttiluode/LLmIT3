@@ -1,0 +1,3 @@
+The database will appear here when you run command: 
+
+Python initialize_db.py in main folder. 
