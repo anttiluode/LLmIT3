@@ -1,5 +1,7 @@
 # LLMIT - The AI-Driven Social Media Playground
 
+Check out the newest version with just one app file - [llmit4](https://github.com/anttiluode/LLmIT4)
+
 ### Watch A Demo!
 [Watch the Demo Here](https://www.youtube.com/watch?v=CByCwDO-VPw)
 
